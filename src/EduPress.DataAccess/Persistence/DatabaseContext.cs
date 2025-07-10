@@ -1,5 +1,6 @@
 ﻿using EduPress.Core.Common;
 using EduPress.Core.Entities;
+using EduPress.DataAccess.Persistence.Configuration;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -9,7 +10,7 @@ namespace EduPress.DataAccess.Persistence
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
         }
@@ -32,6 +33,7 @@ namespace EduPress.DataAccess.Persistence
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(builder);
         }
