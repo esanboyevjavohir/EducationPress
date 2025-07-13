@@ -3,14 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EduPress.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : ApiController
     {
-        [HttpGet("Login")]
-        public async Task<string> LoginAsync()
-        {
-            return "Test";
-        }
+        
     }
 }
