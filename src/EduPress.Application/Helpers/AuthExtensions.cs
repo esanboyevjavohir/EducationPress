@@ -21,9 +21,11 @@ namespace EduPress.Application.Helpers
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).
-                AddJwtBearer(x =>
+            })
+                .AddJwtBearer(x =>
                 {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
                     x.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
@@ -33,16 +35,17 @@ namespace EduPress.Application.Helpers
 
                         ValidIssuer = authOptions.Issuer,
                         ValidAudience = authOptions.Audience,
-                        IssuerSigningKey = new SymmetricSecurityKey(secretKey)
+                        IssuerSigningKey = new SymmetricSecurityKey(secretKey),
+
+                        RoleClaimType = CustomClaimNames.Role,
+                        NameClaimType = CustomClaimNames.Id
                     };
                 });
 
             serviceCollection.AddAuthorization(options =>
             {
                 options.AddPolicy("RequireAdminRole", policy =>
-                {
-                    policy.RequireClaim(ClaimTypes.Role, "Admin");
-                });
+                            policy.RequireClaim(ClaimTypes.Role, "Admin"));
 
                 options.AddPolicy("AdminOrCandidate", policy =>
                 {

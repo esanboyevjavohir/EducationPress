@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EduPress.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20250709113524_first2")]
-    partial class first2
+    [Migration("20250713121000_UpdateCreatedOn1")]
+    partial class UpdateCreatedOn1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,7 @@ namespace EduPress.DataAccess.Migrations
                     b.Property<int>("CourseCount")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
@@ -59,7 +59,7 @@ namespace EduPress.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<decimal>("Latitude")
@@ -89,7 +89,7 @@ namespace EduPress.DataAccess.Migrations
                     b.Property<Guid>("CoursesId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Question")
@@ -115,7 +115,7 @@ namespace EduPress.DataAccess.Migrations
                     b.Property<Guid>("CoursesId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("InstructorsId")
@@ -142,7 +142,7 @@ namespace EduPress.DataAccess.Migrations
                     b.Property<Guid>("CourseSectionId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<TimeSpan>("DurationMinutes")
@@ -174,7 +174,7 @@ namespace EduPress.DataAccess.Migrations
                     b.Property<Guid>("CoursesId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("DurationMinutes")
@@ -206,7 +206,7 @@ namespace EduPress.DataAccess.Migrations
                     b.Property<Guid>("CategoriesId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("DurationMonth")
@@ -247,7 +247,7 @@ namespace EduPress.DataAccess.Migrations
                     b.Property<Guid>("CoursesId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("EnrollmentDate")
@@ -280,7 +280,7 @@ namespace EduPress.DataAccess.Migrations
                     b.Property<int>("CourseCount")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
@@ -317,7 +317,7 @@ namespace EduPress.DataAccess.Migrations
                     b.Property<Guid>("CoursesId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("IsCompleted")
@@ -375,7 +375,7 @@ namespace EduPress.DataAccess.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("EnrollmentId")
@@ -413,7 +413,7 @@ namespace EduPress.DataAccess.Migrations
                     b.Property<Guid>("CoursesId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("IsVerified")
@@ -443,7 +443,7 @@ namespace EduPress.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ReplyText")
@@ -474,7 +474,7 @@ namespace EduPress.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
@@ -493,18 +493,15 @@ namespace EduPress.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("RefreshToken")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("RefreshTokenExpireDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ResetPasswordToken")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("ResetPasswordTokenExpiry")
@@ -523,6 +520,32 @@ namespace EduPress.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("c0ae7f44-f3a2-4ea6-8030-01a4ea1b1aee"),
+                            CreatedOn = new DateTime(2025, 7, 13, 17, 9, 59, 562, DateTimeKind.Local).AddTicks(8493),
+                            Email = "javohir.netdeveloper@gmail.com",
+                            FullName = "Esanboyev Javohir",
+                            IsActive = true,
+                            PasswordHash = "DVa6FkES+3EzHYu0BWRpzIIq1G4DRgus/fx1+VWWSGw=",
+                            PhoneNumber = "+998933116612",
+                            Role = 1,
+                            Salt = "51a3a864-7ed8-4bff-bf5c-1e110ecc6c45"
+                        },
+                        new
+                        {
+                            Id = new Guid("f67273d6-d1ee-4129-9740-75a8df1a5c5b"),
+                            CreatedOn = new DateTime(2025, 7, 13, 12, 9, 59, 563, DateTimeKind.Utc).AddTicks(805),
+                            Email = "biloldeveloper@gmail.com",
+                            FullName = "Bilol",
+                            IsActive = true,
+                            PasswordHash = "stawaDLojBci2JgnmKIpgXbdnDxSqeKaXxv8uQ+2p6o=",
+                            PhoneNumber = "+998932884321",
+                            Role = 2,
+                            Salt = "51a3a864-7ed8-4bff-bf5c-1e110ecc6c45"
+                        });
                 });
 
             modelBuilder.Entity("EduPress.Core.Entities.CourseFaqs", b =>

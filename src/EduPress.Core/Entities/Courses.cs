@@ -19,7 +19,7 @@ namespace EduPress.Core.Entities
         public ICollection<CourseFaqs> CourseFaqs { get; set; } = new List<CourseFaqs>();
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
 
-        public DateTime? CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 }

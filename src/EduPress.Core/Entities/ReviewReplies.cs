@@ -10,7 +10,7 @@ namespace EduPress.Core.Entities
         public Guid ReviewId { get; set; }
         public Review Review { get; set; }
 
-        public DateTime? CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 }

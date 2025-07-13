@@ -9,7 +9,7 @@ namespace EduPress.Core.Entities
         public Guid InstructorsId { get; set; }
         public Instructors Instructors { get; set; }
 
-        public DateTime? CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 }

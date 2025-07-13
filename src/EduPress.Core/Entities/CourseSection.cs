@@ -16,7 +16,7 @@ namespace EduPress.Core.Entities
         public Courses Courses { get; set; }
         public ICollection<CourseLessons> CourseLessons { get; set; } = new List<CourseLessons>();
 
-        public DateTime? CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 }

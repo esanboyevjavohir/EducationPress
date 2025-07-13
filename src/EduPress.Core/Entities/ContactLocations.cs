@@ -8,7 +8,7 @@ namespace EduPress.Core.Entities
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
 
-        public DateTime? CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 }

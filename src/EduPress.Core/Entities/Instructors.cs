@@ -9,7 +9,7 @@ namespace EduPress.Core.Entities
         public int CourseCount { get; set; }
         public ICollection<CourseInstructor> CourseInstructors { get; set; } = new List<CourseInstructor>();
 
-        public DateTime? CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 }

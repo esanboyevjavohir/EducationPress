@@ -14,7 +14,7 @@ namespace EduPress.Core.Entities
 
         public List<Payment> Payments = new List<Payment>();
 
-        public DateTime? CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 }

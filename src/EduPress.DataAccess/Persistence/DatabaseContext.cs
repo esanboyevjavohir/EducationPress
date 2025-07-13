@@ -33,7 +33,7 @@ namespace EduPress.DataAccess.Persistence
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new UserConfiguration());
+            //builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(builder);
         }

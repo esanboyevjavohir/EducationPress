@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace EduPress.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class first2 : Migration
+    public partial class AddUserConfig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -370,6 +372,15 @@ namespace EduPress.DataAccess.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "CreatedOn", "Email", "FullName", "IsActive", "PasswordHash", "PhoneNumber", "RefreshToken", "RefreshTokenExpireDate", "ResetPasswordToken", "ResetPasswordTokenExpiry", "Role", "Salt", "UpdatedOn" },
+                values: new object[,]
+                {
+                    { new Guid("c0ae7f44-f3a2-4ea6-8030-01a4ea1b1aee"), null, "javohir.netdeveloper@gmail.com", "Esanboyev Javohir", true, "DVa6FkES+3EzHYu0BWRpzIIq1G4DRgus/fx1+VWWSGw=", "+998933116612", "", null, "", null, 1, "51a3a864-7ed8-4bff-bf5c-1e110ecc6c45", null },
+                    { new Guid("f67273d6-d1ee-4129-9740-75a8df1a5c5b"), null, "biloldeveloper@gmail.com", "Bilol", true, "stawaDLojBci2JgnmKIpgXbdnDxSqeKaXxv8uQ+2p6o=", "+998932884321", "", null, "", null, 2, "51a3a864-7ed8-4bff-bf5c-1e110ecc6c45", null }
                 });
 
             migrationBuilder.CreateIndex(

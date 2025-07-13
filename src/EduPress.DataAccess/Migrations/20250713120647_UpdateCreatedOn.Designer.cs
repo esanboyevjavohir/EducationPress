@@ -3,6 +3,7 @@ using System;
 using EduPress.DataAccess.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EduPress.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250713120647_UpdateCreatedOn")]
+    partial class UpdateCreatedOn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -522,7 +525,7 @@ namespace EduPress.DataAccess.Migrations
                         new
                         {
                             Id = new Guid("c0ae7f44-f3a2-4ea6-8030-01a4ea1b1aee"),
-                            CreatedOn = new DateTime(2025, 7, 13, 17, 11, 34, 591, DateTimeKind.Local).AddTicks(9188),
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "javohir.netdeveloper@gmail.com",
                             FullName = "Esanboyev Javohir",
                             IsActive = true,
@@ -534,7 +537,7 @@ namespace EduPress.DataAccess.Migrations
                         new
                         {
                             Id = new Guid("f67273d6-d1ee-4129-9740-75a8df1a5c5b"),
-                            CreatedOn = new DateTime(2025, 7, 13, 17, 11, 34, 592, DateTimeKind.Local).AddTicks(1431),
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "biloldeveloper@gmail.com",
                             FullName = "Bilol",
                             IsActive = true,
