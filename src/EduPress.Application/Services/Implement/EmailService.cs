@@ -27,12 +27,20 @@ namespace EduPress.Application.Services.Implement
                 var mailMessage = new MailMessage
                 {
                     From = new MailAddress(_emailConfig.DefaultFromEmail, _emailConfig.DefaultFromName),
-                    Subject = "Your ProfChemistry Verification Code",
+                    Subject = "Your EduPress Verification Code",
+                    Body = $"Dear {email}," +
+                           "\nYou are using this email address to register on our website." +
+                           $"\n\nYour verification code is {otp}." +
+                           "\nPlease use it to complete your registration before it expires." +
+                           "\n\nIf you didn't request this, please ignore this email." +
+                           "\n\nThank you!",
                     IsBodyHtml = true
                 };
 
                 mailMessage.To.Add(email);
+
                 await client.SendMailAsync(mailMessage);
+
                 return true;
             }
             catch (Exception ex)

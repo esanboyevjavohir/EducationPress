@@ -1,4 +1,6 @@
-﻿using EduPress.Application.MappingProfiles;
+﻿using EduPress.Application.Common.Email;
+using EduPress.Application.Helpers.GenerateJWT;
+using EduPress.Application.MappingProfiles;
 using FluentValidation;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -18,6 +20,8 @@ namespace EduPress.Application
 
             services.RegisterCashing();
 
+            services.Configure<JwtOption>(configuration.GetSection("JwtSettings"));
+
             return services;
         }
 
@@ -34,6 +38,11 @@ namespace EduPress.Application
         private static void RegisterCashing(this IServiceCollection services)
         {
             services.AddMemoryCache();
+        }
+
+        public static void AddEmailConfiguration(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddSingleton(configuration.GetSection("SmtpSettings").Get<SmtpSettings>());
         }
     }
 }

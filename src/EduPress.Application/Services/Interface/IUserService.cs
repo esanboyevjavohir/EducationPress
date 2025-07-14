@@ -1,4 +1,5 @@
-﻿using EduPress.Application.Models;
+﻿using EduPress.Application.Helpers.GenerateJWT;
+using EduPress.Application.Models;
 using EduPress.Application.Models.User;
 
 namespace EduPress.Application.Services.Interface
@@ -13,7 +14,7 @@ namespace EduPress.Application.Services.Interface
         Task<ApiResult<bool>> ResendOtpCode(Guid userId);
         Task<ApiResult<bool>> VerifyOtpCode(string code, Guid userId);  
         Task<ApiResult<LoginResponseModel>> LoginAsync(LoginUserModel loginModel);
-        Task<ApiResult<string>> ValidateAndRefreshToken(Guid id, string refreshToken);
+        Task<ApiResult<TokenResponseModel>> ValidateAndRefreshToken(Guid id, string refreshToken);
         Task<ApiResult<bool>> ForgotPasswordAsync(string email);
         Task<ApiResult<bool>> ResetPasswordAsync(ResetPasswordModel model);
         Task<ApiResult<bool>> DeleteUserAsync(Guid id);

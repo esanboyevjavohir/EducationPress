@@ -1,6 +1,6 @@
 ﻿namespace EduPress.Application.Common.Email
 {
-    public class SmptSettings
+    public class SmtpSettings
     {
         public string Server { get; set; }
         public int Port { get; set; }

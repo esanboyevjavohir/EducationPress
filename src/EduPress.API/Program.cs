@@ -1,5 +1,6 @@
 using EduPress.API;
 using EduPress.Application;
+using EduPress.Application.Common.Email;
 using EduPress.Application.Helpers;
 using EduPress.DataAccess;
 using EduPress.DataAccess.Persistence;
@@ -16,6 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailConfiguration"));
 builder.Services.AddApplication(builder.Environment, builder.Configuration)
                 .AddDataAccess(builder.Configuration);
 
