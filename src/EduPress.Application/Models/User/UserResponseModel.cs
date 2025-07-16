@@ -2,7 +2,7 @@
 
 namespace EduPress.Application.Models.User
 {
-    public class UserResponseModel
+    public class UserResponseModel : BaseResponseModel
     {
         public string FullName { get; set; }
         public string Email { get; set; }

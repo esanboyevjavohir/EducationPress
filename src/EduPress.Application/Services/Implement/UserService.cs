@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using EduPress.Application.Helpers;
 using EduPress.Application.Helpers.GenerateJWT;
 using EduPress.Application.Models;
@@ -349,6 +350,63 @@ namespace EduPress.Application.Services.Implement
             user.ResetPasswordTokenExpiry = null;
 
             await _databaseContext.SaveChangesAsync();
+            return ApiResult<bool>.Success(true);
+        }
+
+        public async Task<ApiResult<UserResponseModel>> GetByIdAsync(Guid id)
+        {
+            var user = await _databaseContext.Users
+                .AsNoTracking()
+                .ProjectTo<UserResponseModel>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            if(user == null)
+            {
+                return ApiResult<UserResponseModel>.Failure(new List<string> { "User not found" });
+            }
+
+            return ApiResult<UserResponseModel>.Success(user);
+        }
+
+        public async Task<ApiResult<List<UserResponseModel>>> GetAllAsync()
+        {
+            var users = await _databaseContext.Users
+                .AsNoTracking()
+                .ProjectTo<UserResponseModel>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return ApiResult<List<UserResponseModel>>.Success(users);
+        }
+
+        public async Task<ApiResult<UserResponseModel>> GetUserByEmailAsync(string email)
+        {
+            var user = await _databaseContext.Users
+                .AsNoTracking()
+                .ProjectTo<UserResponseModel>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+            {
+                return ApiResult<UserResponseModel>.Failure(new List<string> { "User not found" });
+            }
+
+            return ApiResult<UserResponseModel>.Success(user);
+        }
+
+        public async Task<ApiResult<bool>> DeleteUserAsync(Guid id)
+        {
+            var user = await _databaseContext.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            if(user == null)
+            {
+                return ApiResult<bool>.Failure(new List<string> { "User not found" });
+            }
+
+            _databaseContext.Users.Remove(user);
+            await _databaseContext.SaveChangesAsync();
+
             return ApiResult<bool>.Success(true);
         }
 
