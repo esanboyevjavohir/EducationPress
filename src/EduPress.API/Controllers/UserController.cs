@@ -51,7 +51,7 @@ namespace EduPress.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("SendOtpCode/{Id}")]
+        [HttpPost("SendOtpCode/{userId}")]
         public async Task<IActionResult> SendOtpCodeAsync(Guid userId)
         {
             var result = await _userService.SendOtpCode(userId);
@@ -70,7 +70,7 @@ namespace EduPress.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("ResendOtpCode/{Id}")]
+        [HttpPost("ResendOtpCode/{userId}")]
         public async Task<ApiResult<bool>> ResendOtpCodeAsync(Guid userId)
         {
             var result = await _userService.ResendOtpCode(userId);

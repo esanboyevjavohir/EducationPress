@@ -95,7 +95,7 @@ namespace EduPress.Application.Services.Implement
 
         public async Task<ApiResult<LoginResponseModel>> LoginAsync(LoginUserModel loginModel)
         {
-            var user = await _databaseContext.Users.AsNoTracking()
+            var user = await _databaseContext.Users
                 .FirstOrDefaultAsync(u => u.Email == loginModel.Email);
 
             if(user == null)
@@ -128,7 +128,7 @@ namespace EduPress.Application.Services.Implement
 
         public async Task<ApiResult<bool>> SendOtpCode(Guid userId)
         {
-            var maybeUser = await _databaseContext.Users.AsNoTracking()
+            var maybeUser = await _databaseContext.Users
                 .Include(a => a.OtpCodes)
                 .FirstOrDefaultAsync(a => a.Id == userId);
 
@@ -159,7 +159,7 @@ namespace EduPress.Application.Services.Implement
 
         public async Task<ApiResult<bool>> ResendOtpCode(Guid userId)
         {
-            var user = await _databaseContext.Users.AsNoTracking()
+            var user = await _databaseContext.Users
                 .Include(a => a.OtpCodes)
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
@@ -219,7 +219,7 @@ namespace EduPress.Application.Services.Implement
                 return ApiResult<bool>.Failure(new List<string> { "OTP code cannot be empty" });
             }
 
-            var user = await _databaseContext.Users.AsNoTracking()
+            var user = await _databaseContext.Users
                 .Include(c => c.OtpCodes)
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
@@ -258,7 +258,7 @@ namespace EduPress.Application.Services.Implement
 
         public async Task<ApiResult<TokenResponseModel>> ValidateAndRefreshToken(Guid id, string refreshToken)
         {
-            var user = await _databaseContext.Users.AsNoTracking()
+            var user = await _databaseContext.Users
                 .FirstOrDefaultAsync(u => u.Id == id);
 
             if (user == null)
@@ -291,7 +291,7 @@ namespace EduPress.Application.Services.Implement
 
         public async Task<ApiResult<bool>> ForgotPasswordAsync(string email)
         {
-            var user = await _databaseContext.Users.AsNoTracking()
+            var user = await _databaseContext.Users
                 .FirstOrDefaultAsync(u => u.Email == email);
 
             if (user == null)
@@ -396,7 +396,6 @@ namespace EduPress.Application.Services.Implement
         public async Task<ApiResult<bool>> DeleteUserAsync(Guid id)
         {
             var user = await _databaseContext.Users
-                .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Id == id);
 
             if(user == null)

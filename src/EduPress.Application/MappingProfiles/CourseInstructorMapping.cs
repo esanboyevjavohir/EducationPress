@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EduPress.Application.Models.CourseInstructorModel;
 using EduPress.Application.Models.InstructorsModel;
 using EduPress.Core.Entities;
 
@@ -8,11 +9,11 @@ namespace EduPress.Application.MappingProfiles
     {
         public CourseInstructorMapping()
         {
-            CreateMap<CreateInstructorsModel, Instructors>();
+            CreateMap<CreateCourseInstructorModel, CourseInstructor>();
 
-            CreateMap<UpdateInstructorsModel, Instructors>().ReverseMap();
+            CreateMap<UpdateCourseInstructorModel, CourseInstructor>().ReverseMap();
 
-            CreateMap<Instructors, InstructorsResponseModel>();
+            CreateMap<CourseInstructor, CourseInstructorResponseModel>();
         }
     }
 }
