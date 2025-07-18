@@ -24,6 +24,16 @@ builder.Services.AddApplication(builder.Environment, builder.Configuration)
 builder.Services.AddAuth(builder.Configuration);
 builder.Services.AddSwagger();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 using var scope = app.Services.CreateScope();
@@ -34,6 +44,8 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();

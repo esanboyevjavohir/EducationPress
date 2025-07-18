@@ -1,6 +1,10 @@
 ﻿using EduPress.Application.Common.Email;
 using EduPress.Application.Helpers.GenerateJWT;
 using EduPress.Application.MappingProfiles;
+using EduPress.Application.Models.User;
+using EduPress.Application.Services.Implement;
+using EduPress.Application.Services.Interface;
+using EduPress.Application.Validators;
 using FluentValidation;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -27,7 +31,25 @@ namespace EduPress.Application
 
         private static void AddServices(this IServiceCollection services, IWebHostEnvironment env)
         {
-            
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<IJwtTokenHandler, JwtTokenHandler>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IContactLocationsService, ContactLocationsService>();
+            services.AddScoped<ICourseFaqsService, CourseFaqsService>();
+            services.AddScoped<ICourseInstructorService, CourseInstructorService>();
+            services.AddScoped<ICourseLessonsService, CourseLessonsService>();
+            services.AddScoped<ICourseSectionService, CourseSectionService>();
+            services.AddScoped<ICoursesService, CoursesService>();
+            services.AddScoped<IEnrollmentService, EnrollmentService>();
+            services.AddScoped<IInstructorsService, InstructorsService>();
+            services.AddScoped<ILessonProgressService, LessonProgressService>();
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IReviewRepliesService, ReviewRepliesService>();
+            services.AddScoped<IReviewService, ReviewService>();
+            services.AddScoped<IValidator<CreateUserModel>, CreateUserValidator>();
+            services.AddScoped<IValidator<ResetPasswordModel>, ResetPasswordValidator>();
         }
 
         private static void RegisterAutoMapper(this IServiceCollection services)
