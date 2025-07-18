@@ -16,7 +16,7 @@ namespace EduPress.API.Controllers
             _courseFaqsService = courseFaqsService;
         }
 
-        [HttpGet("GetById/{Id}")]
+        [HttpGet("GetById/{id}")]
         [Authorize(Policy = "AdminOrCandidate")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
@@ -68,7 +68,7 @@ namespace EduPress.API.Controllers
 
         [HttpPut("Update")]
         [Authorize(Policy = "RequireAdminRole")]
-        public async Task<IActionResult> UpdateAsync(Guid id, UpdateCourseFaqsModel update)
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateCourseFaqsModel update)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

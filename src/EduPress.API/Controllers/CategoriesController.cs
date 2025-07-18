@@ -14,7 +14,7 @@ namespace EduPress.API.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet("GetById/{Id}")]
+        [HttpGet("GetById/{id}")]
         [Authorize(Policy = "AdminOrCandidate")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {

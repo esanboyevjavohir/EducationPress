@@ -105,7 +105,7 @@ namespace EduPress.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetById/{Id}")]
+        [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetUser([FromRoute] Guid id)
         {
             if(!ModelState.IsValid)
@@ -139,7 +139,7 @@ namespace EduPress.API.Controllers
             }
         }
 
-        [HttpDelete("Delete/{Id}")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
         {
             if (!ModelState.IsValid)

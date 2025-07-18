@@ -16,7 +16,7 @@ namespace EduPress.API.Controllers
             _reviewService = reviewService;
         }
 
-        [HttpGet("GetById/{Id}")]
+        [HttpGet("GetById")]
         [Authorize(Policy = "AdminOrCandidate")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
