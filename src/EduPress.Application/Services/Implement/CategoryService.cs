@@ -76,11 +76,10 @@ namespace EduPress.Application.Services.Implement
             return ApiResult<CategoriesResponseModel>.Success(category);
         }
 
-        public async Task<ApiResult<UpdateCategoriesResponseModel>> UpdateAsync(Guid id, 
-            UpdateCategoriesModel update)
+        public async Task<ApiResult<UpdateCategoriesResponseModel>> UpdateAsync(UpdateCategoriesModel update)
         {
             var updateModel = await _databaseContext.Categories
-                .FirstOrDefaultAsync(c => c.Id == id);
+                .FirstOrDefaultAsync(c => c.Id == update.Id);
 
             if (updateModel == null)
             {
