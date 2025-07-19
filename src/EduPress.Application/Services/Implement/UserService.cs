@@ -96,11 +96,25 @@ namespace EduPress.Application.Services.Implement
         public async Task<ApiResult<LoginResponseModel>> LoginAsync(LoginUserModel loginModel)
         {
             var user = await _databaseContext.Users
+                .Include(u => u.OtpCodes)
                 .FirstOrDefaultAsync(u => u.Email == loginModel.Email);
 
-            if(user == null)
+            if (user == null)
             {
                 return ApiResult<LoginResponseModel>.Failure(new List<string> { "User not found" });
+            }
+
+            if(user.Role != UserRole.Admin)
+            {
+                var lastOtp = user.OtpCodes
+                .Where(o => o.Status == OtpCodeStatus.Verified)
+                .OrderByDescending(o => o.CreatedAt)
+                .FirstOrDefault();
+
+                if (lastOtp == null)
+                {
+                    return ApiResult<LoginResponseModel>.Failure(new List<string> { "Email not verified" });
+                }
             }
 
             var hashedPassword = _passwordHasher.Encrypt(loginModel.Password, user.Salt);

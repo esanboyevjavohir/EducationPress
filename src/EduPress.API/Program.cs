@@ -4,6 +4,8 @@ using EduPress.Application.Common.Email;
 using EduPress.Application.Helpers;
 using EduPress.DataAccess;
 using EduPress.DataAccess.Persistence;
+using OfficeOpenXml;
+using System.ComponentModel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,8 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader();
     });
 });
+
+ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
 var app = builder.Build();
 

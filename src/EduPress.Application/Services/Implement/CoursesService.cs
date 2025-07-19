@@ -7,6 +7,7 @@ using EduPress.Application.Services.Interface;
 using EduPress.Core.Entities;
 using EduPress.DataAccess.Persistence;
 using Microsoft.EntityFrameworkCore;
+using StatusGeneric;
 
 namespace EduPress.Application.Services.Implement
 {
@@ -21,48 +22,63 @@ namespace EduPress.Application.Services.Implement
             _databaseContext = databaseContext;
         }
 
-        public async Task<ApiResult<CreateCoursesResponseModel>> CreateAsync(CreateCoursesModel create)
+        public async Task<IStatusGeneric<CreateCoursesResponseModel>> CreateAsync(CreateCoursesModel create)
         {
+            var status = new StatusGenericHandler<CreateCoursesResponseModel>();
+
             var createModel = _mapper.Map<Courses>(create);
             createModel.CreatedOn = DateTime.Now;
 
             _databaseContext.Courses.Add(createModel);
             await _databaseContext.SaveChangesAsync();
 
-            return ApiResult<CreateCoursesResponseModel>.Success(new CreateCoursesResponseModel
+            status.SetResult(new CreateCoursesResponseModel
             {
                 Id = createModel.Id
             });
+
+            return status;
         }
 
-        public async Task<ApiResult<bool>> DeleteAsync(Guid id)
+        public async Task<IStatusGeneric<bool>> DeleteAsync(Guid id)
         {
+            var status = new StatusGenericHandler<bool>();
+
             var delete = await _databaseContext.Courses
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             if (delete == null)
             {
-                return ApiResult<bool>.Failure(new List<string> { "Courses not found" });
+                status.AddError("Courses not found");
+                return status;
             }
 
             _databaseContext.Courses.Remove(delete);
             await _databaseContext.SaveChangesAsync();
 
-            return ApiResult<bool>.Success(true);
+            status.SetResult(true);
+
+            return status;
         }
 
-        public async Task<ApiResult<List<CoursesResponseModel>>> GetAllAsync()
+        public async Task<IStatusGeneric<List<CoursesResponseModel>>> GetAllAsync()
         {
+            var status = new StatusGenericHandler<List<CoursesResponseModel>>();
+
             var getAll = await _databaseContext.Courses
                    .AsNoTracking()
                    .ProjectTo<CoursesResponseModel>(_mapper.ConfigurationProvider)
                    .ToListAsync();
 
-            return ApiResult<List<CoursesResponseModel>>.Success(getAll);
+            status.SetResult(getAll);
+
+            return status;
         }
 
-        public async Task<ApiResult<CoursesResponseModel>> GetByIdAsync(Guid id)
+        public async Task<IStatusGeneric<CoursesResponseModel>> GetByIdAsync(Guid id)
         {
+            var status = new StatusGenericHandler<CoursesResponseModel>();
+
             var getById = await _databaseContext.Courses
                 .AsNoTracking()
                 .ProjectTo<CoursesResponseModel>(_mapper.ConfigurationProvider)
@@ -70,23 +86,26 @@ namespace EduPress.Application.Services.Implement
 
             if(getById == null)
             {
-                return ApiResult<CoursesResponseModel>.Failure(
-                                new List<string> { "Courses not found" });
+                status.AddError("Courses not found");
+                return status;
             }
 
-            return ApiResult<CoursesResponseModel>.Success(getById);
+            status.SetResult(getById);
+            return status;
         }
 
-        public async Task<ApiResult<UpdateCoursesResponseModel>> UpdateAsync(Guid id, 
+        public async Task<IStatusGeneric<UpdateCoursesResponseModel>> UpdateAsync(Guid id, 
             UpdateCoursesModel update)
         {
+            var status = new StatusGenericHandler<UpdateCoursesResponseModel>();
+
             var updateModel = await _databaseContext.Courses
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             if (updateModel == null)
             {
-                return ApiResult<UpdateCoursesResponseModel>.Failure(
-                    new List<string> { "Courses not found" });
+                status.AddError("Courses not found");
+                return status;
             }
 
             _mapper.Map(update, updateModel);
@@ -94,10 +113,12 @@ namespace EduPress.Application.Services.Implement
             _databaseContext.Courses.Update(updateModel);
             await _databaseContext.SaveChangesAsync();
 
-            return ApiResult<UpdateCoursesResponseModel>.Success(new UpdateCoursesResponseModel
+            status.SetResult(new UpdateCoursesResponseModel
             {
                 Id = updateModel.Id
             });
+
+            return status;
         }
     }
 }

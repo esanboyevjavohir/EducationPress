@@ -10,10 +10,24 @@ namespace EduPress.API.Controllers
     public class CourseLessonsController : ApiController
     {
         private readonly ICourseLessonsService _courseLessonsService;
+        private readonly ICourseLessonExportService _courseLessonExportService;
 
-        public CourseLessonsController(ICourseLessonsService courseLessonsService)
+        public CourseLessonsController(ICourseLessonsService courseLessonsService,
+            ICourseLessonExportService courseLessonExportService)
         {
             _courseLessonsService = courseLessonsService;
+            _courseLessonExportService = courseLessonExportService;
+        }
+
+        [HttpGet("Export-lessons")]
+        public async Task<IActionResult> ExportCourseLessonsToExcel()
+        {
+            var fileBytes = await _courseLessonExportService.ExportCourseLessonsToExcelAsync();
+            var fileName = $"CourseLessons_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+
+            return File(fileBytes,
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        fileName);
         }
 
         [HttpGet("GetById/{id}")]

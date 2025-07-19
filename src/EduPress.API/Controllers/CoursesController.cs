@@ -23,10 +23,10 @@ namespace EduPress.API.Controllers
             try
             {
                 var res = await _coursesService.GetByIdAsync(id);
-                if (!res.Succedded)
-                    return BadRequest(res);
+                if (!res.IsValid)
+                    return BadRequest(res.Errors);
 
-                return Ok(res);
+                return Ok(res.Result);
             }
             catch (Exception ex)
             {
@@ -39,10 +39,10 @@ namespace EduPress.API.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             var res = await _coursesService.GetAllAsync();
-            if (!res.Succedded)
-                return BadRequest(res);
+            if (!res.IsValid)
+                return BadRequest(res.Errors);
 
-            return Ok(res);
+            return Ok(res.Result);
         }
 
         [HttpPost("Create")]
@@ -55,10 +55,10 @@ namespace EduPress.API.Controllers
             try
             {
                 var responce = await _coursesService.CreateAsync(create);
-                if (!responce.Succedded)
-                    return BadRequest(responce);
+                if (!responce.IsValid)
+                    return BadRequest(responce.Errors);
 
-                return Ok(responce);
+                return Ok(responce.Result);
             }
             catch (Exception ex)
             {
@@ -76,10 +76,10 @@ namespace EduPress.API.Controllers
             try
             {
                 var responce = await _coursesService.UpdateAsync(id, update);
-                if (!responce.Succedded)
-                    return BadRequest(responce);
+                if (!responce.IsValid)
+                    return BadRequest(responce.Errors);
 
-                return Ok(responce);
+                return Ok(responce.Result);
             }
             catch (Exception ex)
             {
@@ -94,10 +94,10 @@ namespace EduPress.API.Controllers
             try
             {
                 var result = await _coursesService.DeleteAsync(id);
-                if (!result.Succedded)
-                    return BadRequest(result);
+                if (!result.IsValid)
+                    return BadRequest(result.Errors);
 
-                return Ok(result);
+                return Ok(result.Result);
             }
             catch (Exception ex)
             {
