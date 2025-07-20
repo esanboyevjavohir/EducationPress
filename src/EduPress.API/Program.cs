@@ -2,8 +2,10 @@ using EduPress.API;
 using EduPress.Application;
 using EduPress.Application.Common.Email;
 using EduPress.Application.Helpers;
+using EduPress.Application.Helpers.BasicAuth;
 using EduPress.DataAccess;
 using EduPress.DataAccess.Persistence;
+using Microsoft.AspNetCore.Authentication;
 using OfficeOpenXml;
 using System.ComponentModel;
 
@@ -23,8 +25,9 @@ builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection(
 builder.Services.AddApplication(builder.Environment, builder.Configuration)
                 .AddDataAccess(builder.Configuration);
 
-builder.Services.AddAuth(builder.Configuration);
-builder.Services.AddSwagger();
+//builder.Services.AddAuth(builder.Configuration);
+//builder.Services.AddSwagger();
+builder.Services.AddSwaggerGenBasicAuth();
 
 builder.Services.AddCors(options =>
 {
@@ -37,6 +40,11 @@ builder.Services.AddCors(options =>
 });
 
 ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+
+builder.Services.AddAuthentication()
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(
+        BasicAuthenticationDefaults.AuthenticationScheme, null
+    );
 
 var app = builder.Build();
 

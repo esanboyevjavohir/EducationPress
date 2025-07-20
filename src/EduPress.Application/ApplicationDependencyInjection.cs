@@ -24,7 +24,7 @@ namespace EduPress.Application
 
             services.RegisterCashing();
 
-            services.Configure<JwtOption>(configuration.GetSection("JwtSettings"));
+            //services.Configure<JwtOption>(configuration.GetSection("JwtSettings"));
 
             return services;
         }
