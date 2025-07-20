@@ -49,6 +49,7 @@ namespace EduPress.Application
             services.AddScoped<IReviewRepliesService, ReviewRepliesService>();
             services.AddScoped<IReviewService, ReviewService>();
             services.AddScoped<ICourseLessonExportService, CourseLessonExportService>();
+            services.AddScoped<ICategoryExcelImportService, CategoryExcelImportService>();
             services.AddScoped<IValidator<CreateUserModel>, CreateUserValidator>();
             services.AddScoped<IValidator<ResetPasswordModel>, ResetPasswordValidator>();
         }

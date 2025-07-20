@@ -8,10 +8,23 @@ namespace EduPress.API.Controllers
     public class CategoriesController : ApiController
     {
         private readonly ICategoryService _categoryService;
+        private readonly ICategoryExcelImportService _categoryExcelImportService;
 
-        public CategoriesController(ICategoryService categoryService)
+        public CategoriesController(ICategoryService categoryService, 
+            ICategoryExcelImportService categoryExcelImportService)
         {
             _categoryService = categoryService;
+            _categoryExcelImportService = categoryExcelImportService;
+        }
+
+        [HttpPost("Import-Category")]
+        public async Task<IActionResult> ImportCategoryExcelAsync(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("Fayl yuborilmadi");
+
+            await _categoryExcelImportService.ImportFromExcelAsync(file);
+            return Ok("Import muvaffaqiyatli tugadi");
         }
 
         [HttpGet("GetById/{id}")]
