@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  edupress-api:
+    build:
+      context: .
+      dockerfile: src/EduPress.API/Dockerfiledoc
+    container_name: edupress-api
+    ports:
+      - "1000:8080"
+      - "1001:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: edupress-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: edupress_docker
+    ports:
+      - "5432:5432"
+    volumes:
+      - edupress_data:/var/lib/postgresql/data
+
+volumes:
+  edupress_data:
