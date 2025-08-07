@@ -1,30 +1,46 @@
-version: '3.9'
+version: '3.8'
 
 services:
-  edupress-api:
-    build:
-      context: .
-      dockerfile: src/EduPress.API/Dockerfiledoc
-    container_name: edupress-api
-    ports:
-      - "1000:8080"
-      - "1001:8081"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    depends_on:
-      - db
-
   db:
-    image: postgres:15
+    image: postgres:15-alpine
     container_name: edupress-db
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin123
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2606
       POSTGRES_DB: edupress_docker
+      PGDATA: /var/lib/postgresql/data/pgdata
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
-      - edupress_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d edupress_docker"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    networks:
+      - app-network
+
+  web:
+    image: edupress2
+    container_name: softclubb
+    depends_on:
+      db:
+        condition: service_healthy  # Database healthy bo'lgandan keyin ishga tushadi
+    ports:
+      - "1012:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+    restart: always
+    networks:
+      - app-network
 
 volumes:
-  edupress_data:
+  pgdata:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge

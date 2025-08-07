@@ -1,36 +1,33 @@
-# Base image for runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-# Build image
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copy csproj files
-COPY ["EduPress.API/EduPress.API.csproj", "EduPress.API/"]
-COPY ["EduPress.Application/EduPress.Application.csproj", "EduPress.Application/"]
-COPY ["EduPress.DataAccess/EduPress.DataAccess.csproj", "EduPress.DataAccess/"]
-COPY ["EduPress.Core/EduPress.Core.csproj", "EduPress.Core/"]
+COPY ["src/EduPress.API/EduPress.API.csproj", "src/EduPress.API/"]
+COPY ["src/EduPress.Application/EduPress.Application.csproj", "src/EduPress.Application/"]
+COPY ["src/EduPress.DataAccess/EduPress.DataAccess.csproj", "src/EduPress.DataAccess/"]
+COPY ["src/EduPress.Core/EduPress.Core.csproj", "src/EduPress.Core/"]
 
 # Restore dependencies
-RUN dotnet restore "EduPress.API/EduPress.API.csproj"
+RUN dotnet restore "src/EduPress.API/EduPress.API.csproj"
 
-# Copy the rest of the files
+# Copy everything
 COPY . .
 
-# Build the project
-WORKDIR "/src/EduPress.API"
+# Build
+WORKDIR "/src/src/EduPress.API"
 RUN dotnet build "EduPress.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# Publish stage
+# Publish
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "EduPress.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# Final runtime image
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .

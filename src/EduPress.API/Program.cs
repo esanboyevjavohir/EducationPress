@@ -7,7 +7,9 @@ using EduPress.DataAccess;
 using EduPress.DataAccess.Persistence;
 using Microsoft.AspNetCore.Authentication;
 using OfficeOpenXml;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using System.ComponentModel;
+using HealthChecks.NpgSql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,7 +57,11 @@ await AutomatedMigration.MigrateAsync(scope.ServiceProvider);
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
+// HTTPS ni Docker muhitida o'chirish
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseCors("CorsPolicy");
 
