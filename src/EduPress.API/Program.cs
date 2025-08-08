@@ -50,9 +50,25 @@ builder.Services.AddAuthentication()
 
 var app = builder.Build();
 
-using var scope = app.Services.CreateScope();
+// Migration with better error handling
+using (var scope = app.Services.CreateScope())
+{
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    try
+    {
+        logger.LogInformation("Starting database migration...");
+        await AutomatedMigration.MigrateAsync(scope.ServiceProvider);
+        logger.LogInformation("Database migration completed successfully");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Database migration failed. Application will continue but may not function properly.");
+    }
+}
 
-await AutomatedMigration.MigrateAsync(scope.ServiceProvider);
+//using var scope = app.Services.CreateScope();
+
+//await AutomatedMigration.MigrateAsync(scope.ServiceProvidedor);
 
 app.UseSwagger();
 app.UseSwaggerUI();
