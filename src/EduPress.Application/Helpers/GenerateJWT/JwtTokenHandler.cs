@@ -29,7 +29,7 @@ namespace EduPress.Application.Helpers.GenerateJWT
 
             var token = new JwtSecurityToken(
                 issuer: this.jwtOption.Issuer,
-                audience: this.jwtOption.Audience,
+                audience: this.jwtOption.Audience, 
                 expires: DateTime.Now.AddMinutes(this.jwtOption.ExpirationInMinutes),
                 claims: claim,
                 signingCredentials: new SigningCredentials(
@@ -62,6 +62,7 @@ namespace EduPress.Application.Helpers.GenerateJWT
                  key: authSigningKey,
                  algorithm: SecurityAlgorithms.HmacSha256Signature)
                 );
+
             return new JwtSecurityTokenHandler().WriteToken(jwtToken);
         }
 

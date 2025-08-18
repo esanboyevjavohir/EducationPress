@@ -36,6 +36,7 @@ namespace EduPress.Application.Helpers
                         ValidIssuer = authOptions.Issuer,
                         ValidAudience = authOptions.Audience,
                         IssuerSigningKey = new SymmetricSecurityKey(secretKey),
+                        ClockSkew = TimeSpan.Zero,
 
                         RoleClaimType = CustomClaimNames.Role,
                         NameClaimType = CustomClaimNames.Id

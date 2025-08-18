@@ -20,6 +20,8 @@ namespace EduPress.Application
         {
             services.AddServices(env);
 
+            services.AddEmailConfiguration(configuration);
+
             services.RegisterAutoMapper();
 
             services.RegisterCashing();
@@ -33,8 +35,8 @@ namespace EduPress.Application
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
-            services.AddScoped<IJwtTokenHandler, JwtTokenHandler>();
-            services.AddScoped<IEmailService, EmailService>();
+            services.AddSingleton<IJwtTokenHandler, JwtTokenHandler>();
+            services.AddTransient<IEmailService, EmailService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IContactLocationsService, ContactLocationsService>();
             services.AddScoped<ICourseFaqsService, CourseFaqsService>();
@@ -66,7 +68,7 @@ namespace EduPress.Application
 
         public static void AddEmailConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton(configuration.GetSection("SmtpSettings").Get<SmtpSettings>());
+            services.Configure<EmailConfiguration>(configuration.GetSection("EmailConfiguration"));
         }
     }
 }
