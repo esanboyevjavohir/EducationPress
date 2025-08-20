@@ -22,11 +22,11 @@ namespace EduPress.Application
 
             services.AddEmailConfiguration(configuration);
 
+            services.AddJwtConfiguration(configuration);
+
             services.RegisterAutoMapper();
 
             services.RegisterCashing();
-
-            //services.Configure<JwtOption>(configuration.GetSection("JwtSettings"));
 
             return services;
         }
@@ -35,8 +35,8 @@ namespace EduPress.Application
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
-            services.AddSingleton<IJwtTokenHandler, JwtTokenHandler>();
-            services.AddTransient<IEmailService, EmailService>();
+            services.AddScoped<IJwtTokenHandler, JwtTokenHandler>();
+            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IContactLocationsService, ContactLocationsService>();
             services.AddScoped<ICourseFaqsService, CourseFaqsService>();
@@ -69,6 +69,11 @@ namespace EduPress.Application
         public static void AddEmailConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<EmailConfiguration>(configuration.GetSection("EmailConfiguration"));
+        }
+
+        public static void AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<JwtOption>(configuration.GetSection("JwtSettings"));
         }
     }
 }
