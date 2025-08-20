@@ -10,6 +10,7 @@ using OfficeOpenXml;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using System.ComponentModel;
 using HealthChecks.NpgSql;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,14 @@ builder.Services.AddApplication(builder.Environment, builder.Configuration)
 builder.Services.AddAuth(builder.Configuration);
 builder.Services.AddSwagger();
 //builder.Services.AddSwaggerGenBasicAuth();
+
+// Logger
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 
 builder.Services.AddCors(options =>
 {
