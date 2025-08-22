@@ -46,7 +46,7 @@ namespace EduPress.API.Controllers
         }
 
         [HttpPost("Create")]
-        [Authorize(Policy = "RequireAdminRole")]
+        //[Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> CreateAsync([FromBody] CreateCoursesModel create)
         {
             if (!ModelState.IsValid)

@@ -46,7 +46,7 @@ namespace EduPress.API.Controllers
         }
 
         [HttpGet("GetAll")]
-        [Authorize(Policy = "AdminOrCandidate")]
+        //[Authorize(Policy = "AdminOrCandidate")]
         public async Task<IActionResult> GetAllAsync()
         {
             var res = await _categoryService.GetAllAsync();
